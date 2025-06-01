@@ -15,6 +15,7 @@
     "@react-three/cannon": "^6.6.0",
     "@react-three/drei": "^9.120.3",
     "@react-three/fiber": "^8.14.0",
+    "@react-three/postprocessing": "^2.15.12",
     "@tensorflow/tfjs": "^4.22.0",
     "@types/glob": "^8.1.0",
     "@types/linkify-it": "^5.0.0",

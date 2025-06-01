@@ -11,7 +11,7 @@ export default defineConfig({
   ],
 
   optimizeDeps: {
-    include: ['slick-carousel'],
+    include: ['slick-carousel', 'typed.js'],
     exclude: ['jquery']
   }
 })

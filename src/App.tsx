@@ -4,13 +4,13 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
 import WorkExperience from './components/WorkExperience/WorkExperience';
+import Skills from './components/Skills';
 import Projects from './components/Projects';
-import Contact from './components/Contact';
-import Blog from './components/Blog';
-import BackgroundToggle from './components/BackgroundToggle';
-import Certificates from './components/Certificates';
-import Education from './components/Education';
 import Featured from './components/Featured';
+import Blog from './components/Blog';
+import Contact from './components/Contact';
+import BackgroundToggle from './components/BackgroundToggle';
+import DownloadCV from './components/DownloadCV';
 import Footer from './components/Footer';
 import ThreeBackground from './components/ThreeBackground';
 import DynamicGradient from './components/DynamicGradient';
@@ -39,14 +39,14 @@ function App() {
         <Navbar />
         <Hero />
         <About />
+        <Skills />
         <WorkExperience />
         <Projects />
-        <Contact />
-        <Blog />
-        <Certificates />
-        <Education />
         <Featured />
+        <Blog />
+        <Contact />
         <BackgroundToggle onToggle={handleBackgroundToggle} currentType={viewMode} />
+        <DownloadCV />
         <Footer />
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -12,6 +12,7 @@ import Blog from './components/Blog';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ThreeBackground from './components/ThreeBackground';
+import FloatingCVButton from './components/FloatingCVButton';
 
 function App() {
   useEffect(() => {
@@ -38,6 +39,7 @@ function App() {
         <Blog />
         <Contact />
         <Footer />
+        <FloatingCVButton />
       </div>
     </div>
   );

@@ -13,24 +13,13 @@ import Education from './components/Education';
 import Featured from './components/Featured';
 import Footer from './components/Footer';
 import ThreeBackground from './components/ThreeBackground';
-import CustomCursor from './components/CustomCursor';
+import DynamicGradient from './components/DynamicGradient';
 
 function App() {
   const [viewMode, setViewMode] = useState<'default' | 'ai' | 'dynamic'>('default');
-  const [audioContext, setAudioContext] = useState<AudioContext | null>(null);
 
   useEffect(() => {
     document.body.classList.add('dark');
-    
-    // Initialize Web Audio API
-    const context = new (window.AudioContext || (window as any).webkitAudioContext)();
-    setAudioContext(context);
-
-    return () => {
-      if (audioContext) {
-        audioContext.close();
-      }
-    };
   }, []);
 
   const handleBackgroundToggle = (type: 'default' | 'ai' | 'dynamic') => {
@@ -39,8 +28,6 @@ function App() {
 
   return (
     <div className="relative min-h-screen overflow-hidden font-poppins text-white">
-      <CustomCursor />
-      
       {/* Background Component */}
       <div className="absolute inset-0 z-0">
         {viewMode === 'default' && <ThreeBackground />}

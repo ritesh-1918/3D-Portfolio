@@ -1,27 +1,29 @@
-import { useRef, useMemo, useEffect } from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { useRef, useMemo } from 'react';
+import { Canvas, useFrame } from '@react-three/fiber';
 import { EffectComposer, Bloom } from '@react-three/postprocessing';
 import * as THREE from 'three';
-import { useGesture } from '@use-gesture/react';
 
-const ParticleSystem = () => {
-  const particlesRef = useRef<THREE.Points>(null);
-  const { viewport, mouse } = useThree();
+const Stars = () => {
+  const starsRef = useRef<THREE.Points>(null);
+  const count = 3000;
   
-  const count = 5000;
   const [positions, colors] = useMemo(() => {
     const positions = new Float32Array(count * 3);
     const colors = new Float32Array(count * 3);
-    const color1 = new THREE.Color('#00FF88');
+    const color1 = new THREE.Color('#FFFFFF');
     const color2 = new THREE.Color('#7000FF');
 
     for (let i = 0; i < count; i++) {
       const i3 = i * 3;
-      positions[i3] = (Math.random() - 0.5) * 10;
-      positions[i3 + 1] = (Math.random() - 0.5) * 10;
-      positions[i3 + 2] = (Math.random() - 0.5) * 10;
+      const radius = Math.random() * 20;
+      const theta = 2 * Math.PI * Math.random();
+      const phi = Math.acos(2 * Math.random() - 1);
+      
+      positions[i3] = radius * Math.sin(phi) * Math.cos(theta);
+      positions[i3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
+      positions[i3 + 2] = radius * Math.cos(phi);
 
-      const mixedColor = color1.clone().lerp(color2, Math.random());
+      const mixedColor = color1.clone().lerp(color2, Math.random() * 0.5);
       colors[i3] = mixedColor.r;
       colors[i3 + 1] = mixedColor.g;
       colors[i3 + 2] = mixedColor.b;
@@ -30,38 +32,12 @@ const ParticleSystem = () => {
   }, []);
 
   useFrame((state) => {
-    if (!particlesRef.current) return;
-
-    const time = state.clock.getElapsedTime();
-    const particles = particlesRef.current;
-    const positions = particles.geometry.attributes.position.array as Float32Array;
-
-    for (let i = 0; i < count; i++) {
-      const i3 = i * 3;
-      
-      // Rotate particles
-      const x = positions[i3];
-      const z = positions[i3 + 2];
-      positions[i3] = x * Math.cos(0.0005) - z * Math.sin(0.0005);
-      positions[i3 + 2] = z * Math.cos(0.0005) + x * Math.sin(0.0005);
-      
-      // Mouse repulsion
-      const dx = x - (mouse.x * viewport.width) / 2;
-      const dy = positions[i3 + 1] - (mouse.y * viewport.height) / 2;
-      const dz = z;
-      const distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
-      const force = Math.max(0, 1 - distance / 2);
-      
-      positions[i3] += (dx / distance) * force * 0.01;
-      positions[i3 + 1] += (dy / distance) * force * 0.01;
-      positions[i3 + 2] += (dz / distance) * force * 0.01;
-    }
-
-    particles.geometry.attributes.position.needsUpdate = true;
+    if (!starsRef.current) return;
+    starsRef.current.rotation.y = state.clock.getElapsedTime() * 0.05;
   });
 
   return (
-    <points ref={particlesRef}>
+    <points ref={starsRef}>
       <bufferGeometry>
         <bufferAttribute
           attach="attributes-position"
@@ -77,13 +53,35 @@ const ParticleSystem = () => {
         />
       </bufferGeometry>
       <pointsMaterial
-        size={0.05}
+        size={0.02}
         vertexColors
-        blending={THREE.AdditiveBlending}
         transparent
-        depthWrite={false}
+        opacity={0.8}
+        sizeAttenuation
+        blending={THREE.AdditiveBlending}
       />
     </points>
+  );
+};
+
+const Nebula = () => {
+  const nebulaRef = useRef<THREE.Mesh>(null);
+  
+  useFrame((state) => {
+    if (!nebulaRef.current) return;
+    nebulaRef.current.rotation.z = state.clock.getElapsedTime() * 0.05;
+  });
+
+  return (
+    <mesh ref={nebulaRef} position={[0, 0, -5]}>
+      <planeGeometry args={[30, 30]} />
+      <meshBasicMaterial
+        color="#7000FF"
+        transparent
+        opacity={0.1}
+        blending={THREE.AdditiveBlending}
+      />
+    </mesh>
   );
 };
 
@@ -91,15 +89,16 @@ const ThreeBackground = () => {
   return (
     <div className="fixed inset-0 -z-10">
       <Canvas
-        camera={{ position: [0, 0, 5], fov: 75 }}
+        camera={{ position: [0, 0, 5], fov: 60 }}
         gl={{ antialias: true, alpha: true }}
       >
         <color attach="background" args={['#1a1a1a']} />
-        <fog attach="fog" args={['#1a1a1a', 5, 15]} />
-        <ParticleSystem />
+        <fog attach="fog" args={['#1a1a1a', 5, 30]} />
+        <Stars />
+        <Nebula />
         <EffectComposer>
           <Bloom
-            intensity={1.5}
+            intensity={0.5}
             luminanceThreshold={0.1}
             luminanceSmoothing={0.9}
           />

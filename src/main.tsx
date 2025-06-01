@@ -2,11 +2,12 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App'
-// Removed GlassMorphismProvider import
+import { GlassMorphismProvider } from './context/GlassMorphismProvider'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    {/* Removed GlassMorphismProvider usage */}
+    <GlassMorphismProvider>
       <App />
+    </GlassMorphismProvider>
   </StrictMode>,
 )

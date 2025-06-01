@@ -5,6 +5,7 @@ import Hero from './components/Hero';
 import About from './components/About';
 import WorkExperience from './components/WorkExperience/WorkExperience';
 import Skills from './components/Skills';
+import Certificates from './components/Certificates';
 import Projects from './components/Projects';
 import Featured from './components/Featured';
 import Blog from './components/Blog';
@@ -16,13 +17,13 @@ import ThreeBackground from './components/ThreeBackground';
 import DynamicGradient from './components/DynamicGradient';
 
 function App() {
-  const [viewMode, setViewMode] = useState<'default' | 'ai' | 'dynamic'>('default');
+  const [viewMode, setViewMode] = useState<'default' | 'ai'>('default');
 
   useEffect(() => {
     document.body.classList.add('dark');
   }, []);
 
-  const handleBackgroundToggle = (type: 'default' | 'ai' | 'dynamic') => {
+  const handleBackgroundToggle = (type: 'default' | 'ai') => {
     setViewMode(type);
   };
 
@@ -41,6 +42,7 @@ function App() {
         <About />
         <Skills />
         <WorkExperience />
+        <Certificates />
         <Projects />
         <Featured />
         <Blog />

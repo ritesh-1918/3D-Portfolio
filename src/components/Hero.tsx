@@ -9,7 +9,7 @@ const Hero = () => {
   useEffect(() => {
     if (typedRef.current) {
       typed.current = new Typed(typedRef.current, {
-        strings: ['Entrepreneur', 'Video Editor', 'Student'],
+        strings: ['Entrepreneur', 'Freelancer', 'Vibe Coder'],
         typeSpeed: 50,
         backSpeed: 50,
         loop: true,

@@ -193,8 +193,8 @@ const Projects = () => {
         '/images/projects/6.png'
       ],
       links: {
-        live: 'https://house-happiness-calculator.com',
-        github: 'https://github.com/riteshbonthalakoti/house-happiness-calculator'
+        live: 'https://nexora-digital-renaissance.lovable.app/',
+        github: 'https://github.com/ritesh-1918/Nexora-'
       }
     },
     {

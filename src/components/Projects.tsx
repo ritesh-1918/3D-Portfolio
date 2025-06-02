@@ -275,8 +275,7 @@ const Projects = () => {
         '/images/projects/4.png'
       ],
       links: {
-        github: '#',
-        live: '#'
+        github: 'https://github.com/ritesh-1918/Recipe-App',
       },
       longDescription: 'A full-stack recipe sharing application...'
     },

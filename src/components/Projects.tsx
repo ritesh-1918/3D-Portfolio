@@ -184,15 +184,13 @@ const Projects = () => {
       }
     },
     {
-      title: 'House Happiness Calculator',
+      title: 'Nexora',
       description: 'An interactive tool to calculate and improve home satisfaction scores',
       longDescription: 'The House Happiness Calculator is an innovative web application that helps users evaluate and improve their home satisfaction. It analyzes various factors like space utilization, natural light, noise levels, and accessibility to generate a comprehensive happiness score. Users receive personalized recommendations to enhance their living environment based on their specific needs and preferences.',
       tags: ['Web App', 'Lifestyle', 'Real Estate'],
       skills: ['React', 'JavaScript', 'Tailwind CSS', 'Chart.js', 'Firebase'],
       images: [
-        '/images/projects/house-calculator1.jpg',
-        '/images/projects/house-calculator2.jpg',
-        '/images/projects/house-calculator3.jpg'
+        '/images/projects/6.png'
       ],
       links: {
         live: 'https://house-happiness-calculator.com',

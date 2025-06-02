@@ -223,7 +223,7 @@ const Projects = () => {
         '/images/projects/code buddy.png'
       ],
       links: {
-        live: 'https://ritesh-1918.github.io/codebuddy-learn-launch/',
+        live: 'https://codebuddy-learn-launch.lovable.app/',
         github: 'https://github.com/ritesh-1918/codebuddy-learn-launch'
       }
     },

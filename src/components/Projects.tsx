@@ -222,9 +222,7 @@ const Projects = () => {
       tags: ['AI', 'Developer Tools', 'Education'],
       skills: ['Python', 'TensorFlow', 'React', 'Node.js', 'MongoDB'],
       images: [
-        '/images/projects/Code Buddy1.jpg',
-        '/images/projects/Code Buddy2.jpg',
-        '/images/projects/Code Buddy3.jpg'
+        '/images/projects/code buddy.png'
       ],
       links: {
         live: 'https://codebuddy.ai',

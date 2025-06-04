@@ -57,8 +57,8 @@ const certificateData: Certificate[] = [
   },
   {
     id: '10',
-    name: 'Alison Certificate',
-    image: '/images/certificates/Screenshot_2024-08-26-10-53-27-81_b45f4a5818086fda527a0dc0cf3cb0e6.jpg'
+    name: '',
+    image: ''
   },
   {
     id: '11',

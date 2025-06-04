@@ -1,9 +1,7 @@
 import { motion } from 'framer-motion';
 import { useGlassMorphism } from '../context/GlassMorphismProvider';
 import { useState, useRef } from 'react';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+import { FaSearch, FaClock, FaTags } from 'react-icons/fa';
 
 interface BlogPost {
   title: string;
@@ -13,152 +11,71 @@ interface BlogPost {
   image: string;
   link: string;
   color: string;
+  readTime: string;
+  tags: string[];
 }
 
-const BlogPostCard = ({ post, index }: { post: BlogPost; index: number }) => {
-  const { applyGlass } = useGlassMorphism();
-  
-  return (
-    <div className="px-2">
-      {applyGlass(
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: index * 0.1 }}
-          viewport={{ once: true }}
-          whileHover={{ y: -5, transition: { duration: 0.2 } }}
-          className="overflow-hidden h-full"
-          style={{
-            background: `linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 100%), linear-gradient(135deg, ${post.color || '#00ff88'}22 0%, transparent 100%)`
-          }}
-        >
-          <div 
-            className="relative overflow-hidden aspect-video cursor-pointer"
-            onClick={() => window.open(post.link, '_blank')}
-          >
-            <img 
-              src={post.image} 
-              alt={post.title}
-              className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-            />
-            <div className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center bg-black bg-opacity-50">
-              <span className="text-white font-medium">Read Article</span>
-            </div>
-          </div>
-          <div className="p-4">
-            <div className="flex justify-between items-center mb-3">
-              <span className="text-sm text-gray-400">{post.date}</span>
-              <span 
-                className="px-3 py-1 rounded-full text-xs"
-                style={{ backgroundColor: `${post.color || '#00ff88'}22`, color: post.color || '#00ff88' }}
-              >
-                {post.category}
-              </span>
-            </div>
-            <h3 className="text-lg font-bold mb-2 line-clamp-1">{post.title}</h3>
-            <p className="text-gray-300 text-sm mb-4 line-clamp-2">{post.excerpt}</p>
-            <a 
-              href={post.link} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-sm hover:underline inline-flex items-center"
-              style={{ color: post.color || '#00ff88' }}
-            >
-              Read More
-              <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
-            </a>
-          </div>
-        </motion.div>,
-        { borderRadius: '0.75rem', hoverEffect: true }
-      )}
-    </div>
-  );
-};
+const blogPosts: BlogPost[] = [
+  {
+    title: 'Getting Started with React and TypeScript',
+    date: 'June 15, 2024',
+    category: 'Development',
+    excerpt: 'Learn how to set up a new project with React and TypeScript for type-safe development.',
+    image: '/images/blog/react-typescript.jpg',
+    link: 'https://blog.example.com/react-typescript',
+    color: '#61DAFB',
+    readTime: '5 min read',
+    tags: ['React', 'TypeScript', 'Web Development']
+  },
+  {
+    title: 'Creating Stunning Animations with Framer Motion',
+    date: 'May 28, 2024',
+    category: 'Design',
+    excerpt: 'Explore the powerful animation capabilities of Framer Motion in React applications.',
+    image: '/images/blog/framer-motion.jpg',
+    link: 'https://blog.example.com/framer-motion',
+    color: '#FF4154',
+    readTime: '8 min read',
+    tags: ['Animation', 'React', 'UI/UX']
+  },
+  {
+    title: 'Building 3D Experiences with Three.js',
+    date: 'May 10, 2024',
+    category: 'Development',
+    excerpt: 'Dive into the world of 3D web development with Three.js and React Three Fiber.',
+    image: '/images/blog/threejs.jpg',
+    link: 'https://blog.example.com/threejs',
+    color: '#049EF4',
+    readTime: '10 min read',
+    tags: ['Three.js', '3D', 'WebGL']
+  },
+  {
+    title: 'Optimizing React Performance',
+    date: 'April 22, 2024',
+    category: 'Performance',
+    excerpt: 'Learn advanced techniques to optimize your React applications for better user experience.',
+    image: '/images/blog/react-performance.jpg',
+    link: 'https://blog.example.com/react-performance',
+    color: '#00D8FF',
+    readTime: '7 min read',
+    tags: ['React', 'Performance', 'Optimization']
+  }
+];
 
 const Blog = () => {
   const { applyGlass } = useGlassMorphism();
-  const sliderRef = useRef<Slider | null>(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('All');
   
-  const blogPosts: BlogPost[] = [
-    {
-      title: 'Getting Started with React and TypeScript',
-      date: 'June 15, 2024',
-      category: 'Development',
-      excerpt: 'Learn how to set up a new project with React and TypeScript for type-safe development.',
-      image: '/images/blog/react-typescript.jpg',
-      link: 'https://blog.example.com/react-typescript',
-      color: '#61DAFB'
-    },
-    {
-      title: 'Creating Stunning Animations with Framer Motion',
-      date: 'May 28, 2024',
-      category: 'Design',
-      excerpt: 'Explore the powerful animation capabilities of Framer Motion in React applications.',
-      image: '/images/blog/framer-motion.jpg',
-      link: 'https://blog.example.com/framer-motion',
-      color: '#FF4154'
-    },
-    {
-      title: 'Building 3D Experiences with Three.js',
-      date: 'May 10, 2024',
-      category: 'Development',
-      excerpt: 'Dive into the world of 3D web development with Three.js and React Three Fiber.',
-      image: '/images/blog/threejs.jpg',
-      link: 'https://blog.example.com/threejs',
-      color: '#049EF4'
-    },
-    {
-      title: 'Optimizing React Performance',
-      date: 'April 22, 2024',
-      category: 'Performance',
-      excerpt: 'Learn advanced techniques to optimize your React applications for better user experience.',
-      image: '/images/blog/react-performance.jpg',
-      link: 'https://blog.example.com/react-performance',
-      color: '#00D8FF'
-    },
-  ];
+  const categories = ['All', ...new Set(blogPosts.map(post => post.category))];
   
-  const handleNext = () => {
-    if (sliderRef.current) {
-      sliderRef.current.slickNext();
-    }
-  };
-
-  const handlePrev = () => {
-    if (sliderRef.current) {
-      sliderRef.current.slickPrev();
-    }
-  };
-  
-  const settings = {
-    dots: false,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    arrows: false,
-    centerMode: false,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1
-        }
-      },
-      {
-        breakpoint: 640,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1
-        }
-      }
-    ],
-    beforeChange: (_: any, next: number) => setCurrentIndex(next)
-  };
+  const filteredPosts = blogPosts.filter(post => {
+    const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         post.excerpt.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         post.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
+    const matchesCategory = selectedCategory === 'All' || post.category === selectedCategory;
+    return matchesSearch && matchesCategory;
+  });
 
   return (
     <section id="blog" className="py-20">
@@ -176,43 +93,107 @@ const Blog = () => {
           </p>
         </motion.div>
 
-        <div className="relative px-12">
-          <motion.div
-            className="overflow-hidden"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-          >
-            <Slider ref={sliderRef} {...settings} className="blog-slider">
-              {blogPosts.map((post, index) => (
-                <BlogPostCard key={index} post={post} index={index} />
-              ))}
-            </Slider>
-          </motion.div>
+        {/* Search and Filter Bar */}
+        <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+          <div className="relative w-full md:w-64">
+            {applyGlass(
+              <div className="flex items-center">
+                <FaSearch className="absolute left-3 text-gray-400" />
+                <input
+                  type="text"
+                  placeholder="Search posts..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full pl-10 pr-4 py-2 bg-transparent border-none focus:outline-none text-white"
+                />
+              </div>,
+              { borderRadius: '0.5rem' }
+            )}
+          </div>
           
-          {/* Navigation Arrows with Color Effects */}
-          <motion.button
-            onClick={handlePrev}
-            whileHover={{ scale: 1.1, backgroundColor: blogPosts[currentIndex]?.color || '#00ff88' }}
-            whileTap={{ scale: 0.9 }}
-            className="absolute left-0 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 p-3 rounded-full hover:bg-opacity-70 z-10"
-            style={{ boxShadow: `0 0 15px ${blogPosts[currentIndex]?.color || '#00ff88'}66` }}
-          >
-            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-          </motion.button>
-          <motion.button
-            onClick={handleNext}
-            whileHover={{ scale: 1.1, backgroundColor: blogPosts[currentIndex]?.color || '#00ff88' }}
-            whileTap={{ scale: 0.9 }}
-            className="absolute right-0 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 p-3 rounded-full hover:bg-opacity-70 z-10"
-            style={{ boxShadow: `0 0 15px ${blogPosts[currentIndex]?.color || '#00ff88'}66` }}
-          >
-            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </motion.button>
+          <div className="flex gap-2 overflow-x-auto pb-2">
+            {categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => setSelectedCategory(category)}
+                className={`px-4 py-2 rounded-full whitespace-nowrap ${
+                  selectedCategory === category
+                    ? 'bg-primary bg-opacity-20 text-primary'
+                    : 'bg-white bg-opacity-5 text-gray-300 hover:bg-primary hover:bg-opacity-10'
+                }`}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Blog Posts Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredPosts.map((post, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: index * 0.1 }}
+            >
+              {applyGlass(
+                <article className="overflow-hidden">
+                  <div className="relative aspect-video">
+                    <img
+                      src={post.image}
+                      alt={post.title}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                    <div className="absolute bottom-4 left-4 right-4">
+                      <span className="px-3 py-1 rounded-full text-xs font-medium"
+                            style={{ backgroundColor: `${post.color}22`, color: post.color }}>
+                        {post.category}
+                      </span>
+                    </div>
+                  </div>
+                  
+                  <div className="p-6">
+                    <div className="flex items-center gap-4 text-sm text-gray-400 mb-3">
+                      <span>{post.date}</span>
+                      <div className="flex items-center gap-1">
+                        <FaClock className="w-4 h-4" />
+                        <span>{post.readTime}</span>
+                      </div>
+                    </div>
+                    
+                    <h3 className="text-xl font-bold mb-2 line-clamp-2">{post.title}</h3>
+                    <p className="text-gray-300 text-sm mb-4 line-clamp-2">{post.excerpt}</p>
+                    
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {post.tags.map((tag, i) => (
+                        <span
+                          key={i}
+                          className="text-xs px-2 py-1 rounded-full bg-white bg-opacity-5"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    
+                    <a
+                      href={post.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-primary hover:text-white transition-colors"
+                    >
+                      Read More
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                      </svg>
+                    </a>
+                  </div>
+                </article>,
+                { borderRadius: '1rem', hoverEffect: true }
+              )}
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>

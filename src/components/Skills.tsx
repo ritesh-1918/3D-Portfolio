@@ -2,7 +2,8 @@ import { motion } from 'framer-motion';
 import { useGlassMorphism } from '../context/GlassMorphismProvider';
 import { useState } from 'react';
 import { FaCode, FaTools, FaBrain } from 'react-icons/fa';
-import { SiArduino, SiRaspberrypi, SiPython, SiReact, SiNodedotjs, SiTailwindcss, SiGithub, SiFigma, SiVscode, SiPostman } from 'react-icons/si';
+import { SiArduino, SiRaspberrypi, SiPython, SiReact, SiNodedotjs, SiTailwindcss, SiGithub, SiFigma, SiPostman } from 'react-icons/si';
+import { VscCode } from 'react-icons/vsc';
 import { GiCircuitry, GiProcessor } from 'react-icons/gi';
 
 interface Skill {
@@ -48,7 +49,7 @@ const Skills = () => {
       icon: <FaTools className="w-6 h-6" />,
       skills: {
         'Software Tools': [
-          { name: 'VS Code', level: 90, icon: <SiVscode />, color: '#007ACC' },
+          { name: 'VS Code', level: 90, icon: <VscCode />, color: '#007ACC' },
           { name: 'Git & GitHub', level: 90, icon: <SiGithub />, color: '#181717' },
           { name: 'Figma', level: 85, icon: <SiFigma />, color: '#F24E1E' },
           { name: 'Postman', level: 82, icon: <SiPostman />, color: '#FF6C37' }

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { VscCode } from 'react-icons/vsc';
+import { FaAws } from 'react-icons/fa';
 import {
   SiJavascript,
   SiTypescript,
@@ -10,7 +11,6 @@ import {
   SiPostgresql,
   SiGit,
   SiDocker,
-  SiAmazonaws,
   SiTailwindcss,
   SiHtml5,
   SiCss3,
@@ -79,7 +79,7 @@ const Skills: React.FC = () => {
       devops: [
         { name: 'Git', level: 90, icon: <SiGit />, color: '#F05032' },
         { name: 'Docker', level: 80, icon: <SiDocker />, color: '#2496ED' },
-        { name: 'AWS', level: 75, icon: <SiAmazonaws />, color: '#FF9900' },
+        { name: 'AWS', level: 75, icon: <FaAws />, color: '#FF9900' },
         { name: 'Kubernetes', level: 65, icon: <SiKubernetes />, color: '#326CE5' },
         { name: 'Jenkins', level: 70, icon: <SiJenkins />, color: '#D24939' },
         { name: 'Linux', level: 80, icon: <SiLinux />, color: '#FCC624' },
